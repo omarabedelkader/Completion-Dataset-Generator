@@ -3,7 +3,7 @@ To begin you can execute this:
 
 ```st 
 CooCompletionDatasetExporterMessages
-    exportOnPackages: #( 'AI-Sorter' )
+    exportOnPackages: #( 'Completion-Dataset-Generator' )
     heuristics: [ :builder | builder messageHeuristic ]
 	 context: #none
     to: 'completion-dataset.json'.
@@ -24,9 +24,7 @@ Class {
 	#instVars : [
 		'entries',
 		'contextStrategy',
-		'methodContextCache',
-		'classSignatureCache',
-		'classFullContextCache'
+		'methodContextCache'
 	],
 	#category : 'Completion-Dataset-Generator',
 	#package : 'Completion-Dataset-Generator'
@@ -147,46 +145,6 @@ CooCompletionDatasetExporterMessages >> benchCallsite: aMessageNode inMethod: aM
 ]
 
 { #category : 'accessing' }
-CooCompletionDatasetExporterMessages >> classFullContextFor: aMethod [
-
-        | methodClass |
-        methodClass := aMethod methodClass.
-        methodClass ifNil: [ ^ self methodContextFor: aMethod ].
-
-        ^ classFullContextCache
-                  at: methodClass
-                  ifAbsentPut: [ String
-                                streamContents: [ :stream |
-                                        stream nextPutAll: methodClass definition; cr; cr.
-                                        stream nextPutAll: 'Instance methods:'; cr.
-                                        methodClass methodDictionary values do: [ :compiled |
-                                                stream nextPutAll: (self sourceForMethod: compiled); cr; cr ].
-                                        stream nextPutAll: 'Class methods:'; cr.
-                                        methodClass classSide methodDictionary values do: [ :compiled |
-                                                stream nextPutAll: (self sourceForMethod: compiled); cr; cr ] ] ]
-]
-
-{ #category : 'accessing' }
-CooCompletionDatasetExporterMessages >> classSignatureContextFor: aMethod [
-
-        | methodClass |
-        methodClass := aMethod methodClass.
-        methodClass ifNil: [ ^ self methodContextFor: aMethod ].
-
-        ^ classSignatureCache
-                  at: methodClass
-                  ifAbsentPut: [ String
-                                streamContents: [ :stream |
-                                        stream nextPutAll: methodClass definition; cr; cr.
-                                        stream nextPutAll: 'Instance method signatures:'; cr.
-                                        (methodClass selectors asSortedCollection) do: [ :selector |
-                                                stream nextPutAll: selector; cr ].
-                                        stream nextPutAll: 'Class method signatures:'; cr.
-                                        (methodClass classSide selectors asSortedCollection) do: [ :selector |
-                                                stream nextPutAll: selector; cr ] ] ]
-]
-
-{ #category : 'accessing' }
 CooCompletionDatasetExporterMessages >> completionContextFor: aMessageNode withPrefix: prefix [
 
         | receiver source |
@@ -262,12 +220,10 @@ CooCompletionDatasetExporterMessages >> entriesAsJsonString [
 { #category : 'initialization' }
 CooCompletionDatasetExporterMessages >> initialize [
 
-        super initialize.
-                entries := OrderedCollection new.
-        contextStrategy := #completion.
-        methodContextCache := Dictionary new.
-        classSignatureCache := Dictionary new.
-        classFullContextCache := Dictionary new
+	super initialize.
+	entries := OrderedCollection new.
+	contextStrategy := #completion.
+	methodContextCache := Dictionary new.
 ]
 
 { #category : 'accessing' }
