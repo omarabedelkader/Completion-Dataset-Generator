@@ -35,13 +35,13 @@ CooCompletionDatasetExporterMessagesTest >> tearDown [
 CooCompletionDatasetExporterMessagesTest >> testExportOnPackagesWithDifferentContexts [
 
 	CooCompletionDatasetExporterMessages
-		exportOnPackages: #( 'AI-Sorter-Exporter' )
+		exportOnPackages: #( 'Completion-Dataset-Generator' )
 		heuristics: [ :builder | builder messageHeuristic ]
 		context: #none
 		to: noneContextFile fullName.
 
 	CooCompletionDatasetExporterMessages
-		exportOnPackages: #( 'AI-Sorter-Exporter' )
+		exportOnPackages: #( 'Completion-Dataset-Generator' )
 		heuristics: [ :builder | builder messageHeuristic ]
 		context: #completion
 		to: completionContextFile fullName.
