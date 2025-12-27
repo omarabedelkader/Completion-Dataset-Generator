@@ -99,9 +99,6 @@ CooCompletionDatasetExporterMessages class >> exportOnPackages: aCollectionOfPac
 		            builder: CoASTHeuristicsResultSetBuilder new;
 		            contextStrategy: aContextStrategy;
 		            yourself.
-		
-		
-		self halt.
 
 	aHeuristicsBlock ifNotNil: [ aHeuristicsBlock value: exporter builder ].
 
