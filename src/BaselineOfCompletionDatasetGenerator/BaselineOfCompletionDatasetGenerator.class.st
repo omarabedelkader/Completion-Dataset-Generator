@@ -6,12 +6,8 @@ Class {
 }
 
 { #category : 'baselines' }
-BaselineOfCompletionDatasetGenerator >> baseline [
-]
-
-{ #category : 'baselines' }
 BaselineOfCompletionDatasetGenerator >> baseline: spec [
-
+	<baseline>
 	spec for: #common do: [
 			spec
 				baseline: 'ExtendedHeuristicCompletionBenchmarks'
