@@ -173,15 +173,12 @@ CooCompletionDatasetExporterMessages >> contextFor: aMessageNode atPosition: aPo
 { #category : 'accessing' }
 CooCompletionDatasetExporterMessages >> contextFor: aMessageNode inMethod: aMethod atPosition: aPosition withPrefix: prefix [
 
-         ^ self contextStrategy
-                caseOf: {
-                        [ #none ] -> [ Dictionary new ].
-                        [ #completion ] -> [ self completionContextFor: aMessageNode withPrefix: prefix ].
-                        [ #method ] -> [ self methodContextFor: aMethod ].
-                        [ #classSignature ] -> [ self classSignatureContextFor: aMethod ].
-                        [ #class ] -> [ self classFullContextFor: aMethod ].
-                        [ #surroundingCompletion ] -> [ self surroundingCompletionContextFor: aMessageNode atPosition: aPosition withPrefix: prefix ] }
-                otherwise: [ self surroundingCompletionContextFor: aMessageNode atPosition: aPosition withPrefix: prefix ]
+	^ self contextStrategy
+		  caseOf: {
+				  ([ #completion ] -> [ self completionContextFor: aMessageNode withPrefix: prefix ]).
+				  ([ #surroundingCompletion ]
+				   -> [ self surroundingCompletionContextFor: aMessageNode atPosition: aPosition withPrefix: prefix ]) }
+		  otherwise: [ self surroundingCompletionContextFor: aMessageNode atPosition: aPosition withPrefix: prefix ]
 ]
 
 { #category : 'accessing' }
@@ -193,7 +190,7 @@ CooCompletionDatasetExporterMessages >> contextStrategy [
 { #category : 'accessing' }
 CooCompletionDatasetExporterMessages >> contextStrategy: aSymbol [
 
-        contextStrategy := aSymbol ifNil: [ #completion ]
+	contextStrategy := aSymbol 
 ]
 
 { #category : 'accessing' }
@@ -217,16 +214,7 @@ CooCompletionDatasetExporterMessages >> initialize [
 
 	super initialize.
 	entries := OrderedCollection new.
-	contextStrategy := #completion.
-	methodContextCache := Dictionary new.
-]
-
-{ #category : 'accessing' }
-CooCompletionDatasetExporterMessages >> methodContextFor: aMethod [
-
-        ^ methodContextCache
-                  at: aMethod
-                  ifAbsentPut: [ self sourceForMethod: aMethod ]
+	methodContextCache := Dictionary new
 ]
 
 { #category : 'accessing' }
@@ -245,19 +233,6 @@ CooCompletionDatasetExporterMessages >> run [
 	scope methodsDo: [ :method |
 		method parseTree nodesDo: [ :node |
 			node isMessage ifTrue: [ self benchCallsite: node inMethod: method atPosition: node keywordsIntervals first ] ]]
-]
-
-{ #category : 'accessing' }
-CooCompletionDatasetExporterMessages >> sourceForMethod: aMethod [
-
-        | source |
-        source := (aMethod respondsTo: #sourceCode)
-                             ifTrue: [ aMethod sourceCode ]
-                             ifFalse: [ nil ].
-        source ifNil: [ source := (aMethod respondsTo: #getSource)
-                                             ifTrue: [ aMethod getSource ]
-                                             ifFalse: [ nil ] ].
-        ^ source ifNil: [ aMethod printString ]
 ]
 
 { #category : 'accessing' }
