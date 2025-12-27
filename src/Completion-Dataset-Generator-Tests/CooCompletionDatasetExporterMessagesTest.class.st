@@ -34,13 +34,13 @@ CooCompletionDatasetExporterMessagesTest >> tearDown [
 { #category : 'running' }
 CooCompletionDatasetExporterMessagesTest >> testExportOnPackagesWithDifferentContexts [
 
-	CooCompletionDatasetExporterMessages
+	CooCompletionDatasetExporterMessagesTestExporter 
 		exportOnPackages: #( 'Completion-Dataset-Generator' )
 		heuristics: [ :builder | builder messageHeuristic ]
 		context: #none
 		to: noneContextFile fullName.
 
-	CooCompletionDatasetExporterMessages
+	CooCompletionDatasetExporterMessagesTestExporter
 		exportOnPackages: #( 'Completion-Dataset-Generator' )
 		heuristics: [ :builder | builder messageHeuristic ]
 		context: #completion
