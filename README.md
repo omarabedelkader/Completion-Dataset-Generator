@@ -1,4 +1,4 @@
-# Completion-Dataset-Generator
+# HeuristicCompletion-Generator
 
 A Pharo utility for exporting structured code completion datasets from existing packages.  
 It enables researchers and tool builders to generate JSON datasets suitable for training, testing, or analyzing code completion systems.
@@ -15,7 +15,7 @@ It enables researchers and tool builders to generate JSON datasets suitable for 
 
 ```st
 Metacello new
-  githubUser: 'omarabedelkader' project: 'Completion-Dataset-Generator' commitish: 'main' path: 'src';
-  baseline: 'CompletionDatasetGenerator';
+  githubUser: 'omarabedelkader' project: 'HeuristicCompletion-Generator' commitish: 'main' path: 'src';
+  baseline: 'HeuristicCompletionGenerator';
   load.
 ```
