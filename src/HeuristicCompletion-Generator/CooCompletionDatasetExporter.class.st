@@ -42,17 +42,17 @@ CooCompletionDatasetExporter class >> exportOnPackages: aCollectionOfPackages he
 	^ exporter
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'benchmarks' }
 CooCompletionDatasetExporter >> benchCallsite: aMessageNode inMethod: aMethod atPosition: aPosition [ 
 	^ self subclassResponsibility
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'benchmarks' }
 CooCompletionDatasetExporter >> completionContextFor: aMessageNode withPrefix: prefix [ 
 	^ self subclassResponsibility
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'benchmarks' }
 CooCompletionDatasetExporter >> contextFor: aMessageNode inMethod: aMethod atPosition: aPosition withPrefix: prefix [ 
 	^ self subclassResponsibility
 ]

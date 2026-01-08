@@ -1,3 +1,6 @@
+"
+mock
+"
 Class {
 	#name : 'CooCompletionDatasetExporterTestNode',
 	#superclass : 'Object',
